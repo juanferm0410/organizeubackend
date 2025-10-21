@@ -73,16 +73,6 @@ let TasksService = class TasksService {
         }
         return { message: "Task added successfully", user: updatedUser, };
     }
-    async completeTask(userId, taskId) {
-        const collection = await this.getCollection();
-        const result = await collection.findOneAndUpdate({
-            _id: new mongodb_1.ObjectId(userId),
-            "user.tasks.id": taskId
-        }, {
-            $set: { "user.tasks.$.task.completed": true }
-        });
-        return "Task marked as completed successfully";
-    }
     async getTasks(userId, page = 1, limit = 5, name) {
         const collection = await this.getCollection();
         const objectId = new mongodb_1.ObjectId(userId);

@@ -1,16 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
-import { AllExceptionsFilter } from './src/common/filters/all-exceptions.filter';
+import { AllExceptionsFilter } from './src/common/filters/all-exceptions.filterX';
 import { LoggingInterceptor } from './src/common/interceptors/logging.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Aplica el filtro global de excepciones
+  // Aplica el filtro global de excepciones (front)
   app.useGlobalFilters(new AllExceptionsFilter());
 
-  // Aplica el interceptor global formato de logs HALL
+  // Aplica el interceptor global formato de logs HALL (back)
   app.useGlobalInterceptors(new LoggingInterceptor());
 
   // Habilitar validaciones globales

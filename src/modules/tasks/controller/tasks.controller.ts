@@ -78,21 +78,6 @@ export class TasksController {
     return task;
   }
 
-  // Service: Update Task to completed
-  @UseGuards(JwtAuthGuard)
-  @Patch(':userId/tasks/:taskId')
-  async completeTask(@Param('userId') userId: string, @Param('taskId') taskId: string) {
-    this.ensureValidObjectId(userId);
-
-    const updatedTask = await this.tasksService.completeTask(userId, taskId);
-    if (!updatedTask) {
-      throw new NotFoundException(`No task with id ${taskId} found for user ${userId}`);
-    }
-
-    console.log(`Task ${taskId} for user ${userId} marked as completado:`, updatedTask);
-
-    return updatedTask;
-  }
 
   // Helper privado para validar ObjectId
   private ensureValidObjectId(id: string) {

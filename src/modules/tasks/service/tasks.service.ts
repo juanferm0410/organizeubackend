@@ -46,22 +46,6 @@ export class TasksService {
     return { message: "Task added successfully", user: updatedUser, };    // Response to the API caller
   }
 
-  /*** SERVICE: CHECK A COMPLETED TASK ************/
-  async completeTask(userId: string, taskId: string) {
-    const collection = await this.getCollection();
-
-    const result = await collection.findOneAndUpdate(
-      {
-        _id: new ObjectId(userId),
-        "user.tasks.id": taskId // busco la tarea específica
-      },
-      {
-        $set: { "user.tasks.$.task.completed": true } // actualizo el estado a completed
-      }
-    );
-    
-    return "Task marked as completed successfully";
-  }
 
   /*** SERVICE: GET TASKS WITH PAGINATION AND FILTER ************/
   async getTasks(userId: string, page: number = 1, limit: number = 5, name?: string) {

@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@nestjs/core");
 const common_1 = require("@nestjs/common");
 const app_module_1 = require("./app.module");
-const all_exceptions_filter_1 = require("./src/common/filters/all-exceptions.filter");
+const all_exceptions_filterX_1 = require("./src/common/filters/all-exceptions.filterX");
 const logging_interceptor_1 = require("./src/common/interceptors/logging.interceptor");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
-    app.useGlobalFilters(new all_exceptions_filter_1.AllExceptionsFilter());
+    app.useGlobalFilters(new all_exceptions_filterX_1.AllExceptionsFilter());
     app.useGlobalInterceptors(new logging_interceptor_1.LoggingInterceptor());
     app.useGlobalPipes(new common_1.ValidationPipe({
         whitelist: true,
