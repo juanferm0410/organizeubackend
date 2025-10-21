@@ -67,7 +67,7 @@ let PasswordService = class PasswordService {
         if (!user)
             throw new common_1.NotFoundException(`There is no user with the email ${email}`);
         const token = this.jwtService.sign({ _id: user._id }, { secret: process.env.JWT_SECRET, expiresIn: 900 });
-        const resetLink = `${process.env.FRONTEND_URL}/password/reset/${token}`;
+        const resetLink = `${process.env.FRONTEND_URL}/password-reset/${token}`;
         const transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST,
             port: parseInt(process.env.SMTP_PORT ?? "587"),
@@ -78,7 +78,7 @@ let PasswordService = class PasswordService {
             },
         });
         const info = await transporter.sendMail({
-            from: `"Soporte Agenda" <${process.env.SMTP_USER}>`,
+            from: `"Soporte OrganizeU" <${process.env.SMTP_USER}>`,
             to: email,
             subject: "Recuperación de contraseña",
             html: `

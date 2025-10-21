@@ -7,7 +7,8 @@ export declare class AuthService {
     constructor(usersService: UsersService, jwtService: JwtService);
     validateUser(loginDto: LoginDto): Promise<any>;
     generateToken(user: any): Promise<{
-        access_token: string;
+        token: string;
+        id: any;
     }>;
     getByUsername(username: string): Promise<import("mongodb").WithId<import("bson").Document>>;
 }

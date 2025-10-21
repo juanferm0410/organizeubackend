@@ -2,6 +2,7 @@ import { Controller, Get, Post, Patch, Param, Body, BadRequestException, Unautho
 import { PasswordService } from '../service/password.service';
 import * as dotenv from "dotenv";
 import { JwtService } from '@nestjs/jwt';
+import { PasswordRecoverDto } from '../dto/password-recover.login.dto';
 
 dotenv.config();                  // Load environment variables
 
@@ -15,9 +16,10 @@ export class PasswordController {
 //************************** PASSWORD *************************************/
   // Service: Send password recovery email
   @Post('recover')
-  async recoverPassword(@Body() body: { email: string }) {
-    if (!body.email) throw new BadRequestException('Email is requested');
-    return this.passwordService.sendPasswordRecoveryEmail(body.email);
+  async recoverPassword(@Body() passwordRecoverDto: PasswordRecoverDto) {
+    if (!passwordRecoverDto.email) throw new BadRequestException('Email is requested');
+    return this.passwordService.sendPasswordRecoveryEmail(passwordRecoverDto.email);
+
   }
 
   // Service: Send Token password recovery email

@@ -3,15 +3,15 @@ import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'El nombre es obligatorio' })
   name: string;
-  @IsEmail()
-  @IsNotEmpty()
+  @IsEmail({}, { message: 'Email inválido' })
+  @IsNotEmpty({ message: 'El email es obligatorio' })
   email: string;
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'El nombre de usuario es obligatorio' })
   username: string;
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'La contraseña es obligatoria' })
   password: string;
   tasks?: CreateTaskDto[];
 }

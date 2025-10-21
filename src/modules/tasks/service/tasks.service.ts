@@ -64,7 +64,7 @@ export class TasksService {
   }
 
   /*** SERVICE: GET TASKS WITH PAGINATION AND FILTER ************/
-  async getTasks(userId: string, page: number = 1, limit: number = 10, name?: string) {
+  async getTasks(userId: string, page: number = 1, limit: number = 5, name?: string) {
     const collection = await this.getCollection();
     const objectId = new ObjectId(userId);
 

@@ -9,28 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUserDto = void 0;
+exports.LoginDto = void 0;
 const class_validator_1 = require("class-validator");
-class CreateUserDto {
+class LoginDto {
 }
-exports.CreateUserDto = CreateUserDto;
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'El nombre es obligatorio' }),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "name", void 0);
+exports.LoginDto = LoginDto;
 __decorate([
     (0, class_validator_1.IsEmail)({}, { message: 'Email inválido' }),
     (0, class_validator_1.IsNotEmpty)({ message: 'El email es obligatorio' }),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "email", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: 'El nombre de usuario es obligatorio' }),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "username", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'La contraseña es obligatoria' }),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "password", void 0);
-//# sourceMappingURL=create-user.dto.js.map
+], LoginDto.prototype, "email", void 0);
+//# sourceMappingURL=login.dto.js.map

@@ -15,19 +15,19 @@ class CreateTaskDto {
 }
 exports.CreateTaskDto = CreateTaskDto;
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: 'El nombre es obligatorio' }),
     __metadata("design:type", String)
 ], CreateTaskDto.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: 'La hora es obligatoria' }),
     __metadata("design:type", String)
 ], CreateTaskDto.prototype, "time", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: 'La fecha es obligatoria' }),
     __metadata("design:type", String)
 ], CreateTaskDto.prototype, "date", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: 'El mensaje es obligatorio' }),
     __metadata("design:type", String)
 ], CreateTaskDto.prototype, "message", void 0);
 //# sourceMappingURL=create-task.dto.js.map

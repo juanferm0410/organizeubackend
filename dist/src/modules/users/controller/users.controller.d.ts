@@ -8,7 +8,8 @@ export declare class UsersController {
     getAllUsers(): Promise<import("mongodb").WithId<import("bson").Document>[]>;
     getById(id: string): Promise<import("mongodb").WithId<import("bson").Document>>;
     addUser(body: CreateUserDto): Promise<{
-        access_token: string;
+        token: string;
+        id: any;
     }>;
     private ensureValidObjectId;
 }

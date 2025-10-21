@@ -14,7 +14,7 @@ const class_validator_1 = require("class-validator");
 class PaginationDto {
     constructor() {
         this.page = 1;
-        this.limit = 10;
+        this.limit = 5;
     }
 }
 exports.PaginationDto = PaginationDto;

@@ -1,12 +1,11 @@
 import { PasswordService } from '../service/password.service';
 import { JwtService } from '@nestjs/jwt';
+import { PasswordRecoverDto } from '../dto/password-recover.login.dto';
 export declare class PasswordController {
     private readonly passwordService;
     private readonly jwtService;
     constructor(passwordService: PasswordService, jwtService: JwtService);
-    recoverPassword(body: {
-        email: string;
-    }): Promise<{
+    recoverPassword(passwordRecoverDto: PasswordRecoverDto): Promise<{
         message: string;
     }>;
     verifyResetToken(token: string): Promise<{

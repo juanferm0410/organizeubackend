@@ -5,6 +5,7 @@ import * as dotenv from "dotenv";
 import * as nodemailer from "nodemailer";
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
+import { PasswordRecoverDto } from '../dto/password-recover.login.dto';
 
 dotenv.config();                      // Load environment variables
 const dbCollection = 'user';          // MongoDB collection name
@@ -34,7 +35,8 @@ export class PasswordService {
     );
 
     // Link de recuperación
-    const resetLink = `${process.env.FRONTEND_URL}/password/reset/${token}`;
+    // const resetLink = `${process.env.BACKEND_URL}/password/reset/${token}`;
+    const resetLink = `${process.env.FRONTEND_URL}/password-reset/${token}`;
 
     // Se configura transporte de correo
     const transporter = nodemailer.createTransport({
@@ -49,7 +51,7 @@ export class PasswordService {
 
     // Envia correo con el enlace de recuperación
     const info = await transporter.sendMail({
-      from: `"Soporte Agenda" <${process.env.SMTP_USER}>`,
+      from: `"Soporte OrganizeU" <${process.env.SMTP_USER}>`,
       to: email,
       subject: "Recuperación de contraseña",
       html: `

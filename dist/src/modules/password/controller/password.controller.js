@@ -50,16 +50,17 @@ const common_1 = require("@nestjs/common");
 const password_service_1 = require("../service/password.service");
 const dotenv = __importStar(require("dotenv"));
 const jwt_1 = require("@nestjs/jwt");
+const password_recover_login_dto_1 = require("../dto/password-recover.login.dto");
 dotenv.config();
 let PasswordController = class PasswordController {
     constructor(passwordService, jwtService) {
         this.passwordService = passwordService;
         this.jwtService = jwtService;
     }
-    async recoverPassword(body) {
-        if (!body.email)
+    async recoverPassword(passwordRecoverDto) {
+        if (!passwordRecoverDto.email)
             throw new common_1.BadRequestException('Email is requested');
-        return this.passwordService.sendPasswordRecoveryEmail(body.email);
+        return this.passwordService.sendPasswordRecoveryEmail(passwordRecoverDto.email);
     }
     async verifyResetToken(token) {
         return this.passwordService.verifyResetToken(token);
@@ -84,7 +85,7 @@ __decorate([
     (0, common_1.Post)('recover'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [password_recover_login_dto_1.PasswordRecoverDto]),
     __metadata("design:returntype", Promise)
 ], PasswordController.prototype, "recoverPassword", null);
 __decorate([

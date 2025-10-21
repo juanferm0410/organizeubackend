@@ -83,7 +83,7 @@ let TasksService = class TasksService {
         });
         return "Task marked as completed successfully";
     }
-    async getTasks(userId, page = 1, limit = 10, name) {
+    async getTasks(userId, page = 1, limit = 5, name) {
         const collection = await this.getCollection();
         const objectId = new mongodb_1.ObjectId(userId);
         const userDoc = await collection.findOne({ _id: objectId });

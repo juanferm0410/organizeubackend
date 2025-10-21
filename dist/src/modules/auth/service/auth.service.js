@@ -67,7 +67,8 @@ let AuthService = class AuthService {
         const payload = { sub: user._id || user.id, username: user.user.username };
         const token = this.jwtService.sign(payload);
         return {
-            access_token: token,
+            token: token,
+            id: user._id || user.id,
         };
     }
     async getByUsername(username) {

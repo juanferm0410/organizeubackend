@@ -13,5 +13,5 @@ export class PaginationDto {
   @IsOptional()
   @IsPositive()
   @Min(1)
-  readonly limit?: number = 10;
+  readonly limit?: number = 5;
 }

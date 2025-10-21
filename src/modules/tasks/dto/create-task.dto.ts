@@ -1,12 +1,12 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateTaskDto {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'El nombre es obligatorio' })
   name: string;
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'La hora es obligatoria' })
   time: string;
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'La fecha es obligatoria' })
   date: string;
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'El mensaje es obligatorio' })
   message: string;
 }
