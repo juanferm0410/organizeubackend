@@ -40,9 +40,9 @@ export class UsersService {
     const existingData = await this.findByEmailOrUsername(createUserDto.email, createUserDto.username);
     
     if (existingData) {
-      let message = 'The following fields already exist: ';
+      let message = 'Estos datos ya están registrados: ';
       if (existingData.email) message += 'email ';
-      if (existingData.username) message += 'username';
+      if (existingData.username) message += 'usuario';
       throw new BadRequestException(message.trim());
     }
 
@@ -62,7 +62,7 @@ export class UsersService {
 
     // Insertar en la base de datos
     const result = await collection.insertOne(userData);
-    return { message: 'User created successfully', user: {  _id: result.insertedId, ...userData } };
+    return { message: 'Usuario registrado', user: {  _id: result.insertedId, ...userData } };
   }
   
 //************************** REGISTER *************************************/

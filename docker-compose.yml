@@ -4,8 +4,8 @@ services:
     container_name: organizeu
     restart: always
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
-      - MONGO_URL=mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_DOMAIN}/?retryWrites=true&w=majority&appName=${DB_CLUSTER}
+      - MONGO_URL=mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/?retryWrites=true&w=majority&appName=${DB_CLUSTER}
     env_file:
-      - .env  
+      - .env

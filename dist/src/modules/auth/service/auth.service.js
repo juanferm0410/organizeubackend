@@ -75,7 +75,7 @@ let AuthService = class AuthService {
         const collection = await this.usersService.getCollection();
         const doc = await collection.findOne({ "user.username": username });
         if (!doc)
-            throw new common_1.NotFoundException(`User with id ${username} not found`);
+            throw new common_1.NotFoundException(`Usuario ${username} no registrado`);
         return doc;
     }
 };

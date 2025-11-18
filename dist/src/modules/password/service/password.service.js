@@ -44,12 +44,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PasswordService = void 0;
 const common_1 = require("@nestjs/common");
-const connectDB_1 = require("../../../database/connectDB");
-const mongodb_1 = require("mongodb");
-const dotenv = __importStar(require("dotenv"));
-const nodemailer = __importStar(require("nodemailer"));
 const jwt_1 = require("@nestjs/jwt");
 const bcrypt = __importStar(require("bcryptjs"));
+const dotenv = __importStar(require("dotenv"));
+const mongodb_1 = require("mongodb");
+const nodemailer = __importStar(require("nodemailer"));
+const connectDB_1 = require("../../../database/connectDB");
 dotenv.config();
 const dbCollection = 'user';
 let PasswordService = class PasswordService {
@@ -61,16 +61,17 @@ let PasswordService = class PasswordService {
         const db = await (0, connectDB_1.connectDB)();
         return db.collection(this.collectionName);
     }
-    async sendPasswordRecoveryEmail(email) {
+    async sendPasswordRecoveryEmail(email, origin = 'web') {
         const collection = await this.getCollection();
-        const user = await collection.findOne({ "user.email": email });
+        const user = await collection.findOne({ 'user.email': email });
         if (!user)
-            throw new common_1.NotFoundException(`There is no user with the email ${email}`);
+            throw new common_1.NotFoundException(`El email ${email} no está registrado`);
         const token = this.jwtService.sign({ _id: user._id }, { secret: process.env.JWT_SECRET, expiresIn: 900 });
-        const resetLink = `${process.env.FRONTEND_URL}/password-reset/${token}`;
+        const baseUrl = origin === 'mobile' ? (process.env.FRONTEND_URL_PROD_MOBILE || `${process.env.HOST}:${process.env.FRONTEND_MOBILE_PORT}`) : (process.env.FRONTEND_URL_PROD_WEB || `${process.env.HOST}:${process.env.FRONTEND_WEB_PORT}`);
+        const resetLink = `http://${baseUrl}/password-reset/${token}`;
         const transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST,
-            port: parseInt(process.env.SMTP_PORT ?? "587"),
+            port: parseInt(process.env.SMTP_PORT ?? '587'),
             secure: false,
             auth: {
                 user: process.env.SMTP_USER,
@@ -80,12 +81,13 @@ let PasswordService = class PasswordService {
         const info = await transporter.sendMail({
             from: `"Soporte OrganizeU" <${process.env.SMTP_USER}>`,
             to: email,
-            subject: "Recuperación de contraseña",
+            subject: 'Recuperación de contraseña',
             html: `
-        <h2>Hola ${user.user?.name ?? 'Usuario'},</h2>
+        <h3 style="font-weight:900;font-style:italic;font-size:1.25rem;text-align:center;">Organize<span style="color:#107ACC;">U</span></h3>
+        <h3>Hola ${user.user?.name ?? 'Usuario'},</h3>
         <p>Has solicitado restablecer tu contraseña.</p>
         <p>Haz clic en el siguiente enlace para establecer una nueva contraseña (válido por 15 minutos):</p>
-        <a href="${resetLink}" style="background-color:#007bff;color:white;padding:10px 15px;border-radius:5px;text-decoration:none;">Restablecer contraseña</a>
+        <a href="${resetLink}" style="background-color:#5c3b99;color:white;padding:10px 15px;border-radius:5px;text-decoration:none;">Restablecer contraseña</a>
         <br /><br />
         <p>Este enlace estará disponible por 15 minutos.</p>
         <p>Si no solicitaste este cambio, puedes ignorar este mensaje.</p>
@@ -93,17 +95,17 @@ let PasswordService = class PasswordService {
       `,
         });
         console.log(`Recovery email sent to ${email}:`, info.messageId);
-        return { message: `Recovery link sent to ${email}` };
+        return { message: `Link de recuperación enviado a ${email}` };
     }
     async verifyResetToken(token) {
         if (!token)
             throw new common_1.BadRequestException('Token is required');
         try {
             const payload = this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
-            return { message: 'Valid token', id: payload._id };
+            return { message: 'Token válido o expirado', id: payload._id };
         }
         catch (err) {
-            throw new common_1.BadRequestException('Invalid or expired token');
+            throw new common_1.BadRequestException('Token inválido o expirado');
         }
     }
     async updatePasswordById(id, newPassword) {
@@ -113,7 +115,7 @@ let PasswordService = class PasswordService {
             throw new common_1.NotFoundException('User not found');
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         await collection.updateOne({ _id: user._id }, { $set: { 'user.password': hashedPassword } });
-        return { message: 'Password updated succesfully' };
+        return { message: 'Contraseña actualizada' };
     }
 };
 exports.PasswordService = PasswordService;

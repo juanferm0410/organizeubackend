@@ -57,26 +57,31 @@ let PasswordController = class PasswordController {
         this.passwordService = passwordService;
         this.jwtService = jwtService;
     }
-    async recoverPassword(passwordRecoverDto) {
-        if (!passwordRecoverDto.email)
+    async recoverPassword(passwordRecoverDto, client) {
+        if (!passwordRecoverDto.email) {
             throw new common_1.BadRequestException('Email is requested');
-        return this.passwordService.sendPasswordRecoveryEmail(passwordRecoverDto.email);
+        }
+        const origin = client && client.toLowerCase() === 'mobile' ? 'mobile' : 'web';
+        return this.passwordService.sendPasswordRecoveryEmail(passwordRecoverDto.email, origin);
     }
     async verifyResetToken(token) {
         return this.passwordService.verifyResetToken(token);
     }
     async updatePassword(body) {
         const { token, newPassword } = body;
-        if (!token || !newPassword)
-            throw new common_1.BadRequestException('Token and new password are required');
+        if (!token || !newPassword) {
+            throw new common_1.BadRequestException('Ingresa la nueva contraseña');
+        }
         try {
-            const payload = this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
+            const payload = this.jwtService.verify(token, {
+                secret: process.env.JWT_SECRET,
+            });
             const id = payload._id;
             await this.passwordService.updatePasswordById(id, newPassword);
-            return { message: 'Password updated successfully' };
+            return { message: 'Contraseña actualizada' };
         }
         catch (error) {
-            throw new common_1.UnauthorizedException('Invalid or expired token');
+            throw new common_1.UnauthorizedException('Token inválido o expirado');
         }
     }
 };
@@ -84,8 +89,9 @@ exports.PasswordController = PasswordController;
 __decorate([
     (0, common_1.Post)('recover'),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Headers)('x-client')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [password_recover_login_dto_1.PasswordRecoverDto]),
+    __metadata("design:paramtypes", [password_recover_login_dto_1.PasswordRecoverDto, String]),
     __metadata("design:returntype", Promise)
 ], PasswordController.prototype, "recoverPassword", null);
 __decorate([
@@ -104,7 +110,6 @@ __decorate([
 ], PasswordController.prototype, "updatePassword", null);
 exports.PasswordController = PasswordController = __decorate([
     (0, common_1.Controller)('password'),
-    __metadata("design:paramtypes", [password_service_1.PasswordService,
-        jwt_1.JwtService])
+    __metadata("design:paramtypes", [password_service_1.PasswordService, jwt_1.JwtService])
 ], PasswordController);
 //# sourceMappingURL=password.controller.js.map

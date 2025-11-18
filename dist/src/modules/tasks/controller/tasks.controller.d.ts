@@ -22,5 +22,6 @@ export declare class TasksController {
         };
     }>;
     getTaskById(userId: string, taskId: string): Promise<any>;
+    completeTask(userId: string, taskId: string): Promise<string>;
     private ensureValidObjectId;
 }

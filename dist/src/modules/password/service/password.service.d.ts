@@ -4,7 +4,7 @@ export declare class PasswordService {
     constructor(jwtService: JwtService);
     private readonly collectionName;
     private getCollection;
-    sendPasswordRecoveryEmail(email: string): Promise<{
+    sendPasswordRecoveryEmail(email: string, origin?: 'web' | 'mobile'): Promise<{
         message: string;
     }>;
     verifyResetToken(token: string): Promise<{

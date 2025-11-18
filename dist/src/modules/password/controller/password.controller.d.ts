@@ -5,7 +5,7 @@ export declare class PasswordController {
     private readonly passwordService;
     private readonly jwtService;
     constructor(passwordService: PasswordService, jwtService: JwtService);
-    recoverPassword(passwordRecoverDto: PasswordRecoverDto): Promise<{
+    recoverPassword(passwordRecoverDto: PasswordRecoverDto, client: string): Promise<{
         message: string;
     }>;
     verifyResetToken(token: string): Promise<{

@@ -1,2 +1,2 @@
-import { Db } from "mongodb";
+import { Db } from 'mongodb';
 export declare function connectDB(): Promise<Db>;

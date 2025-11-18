@@ -41,7 +41,7 @@ export class AuthService {
     async getByUsername(username: string) {
       const collection = await this.usersService.getCollection();
       const doc = await collection.findOne({ "user.username": username });
-      if (!doc) throw new NotFoundException(`User with id ${username} not found`);
+      if (!doc) throw new NotFoundException(`Usuario ${username} no registrado`);
       return doc;
     }
 

@@ -69,9 +69,19 @@ let TasksService = class TasksService {
         const updatedUser = await collection.findOne({ _id: objectId });
         if (!updatedUser) {
             console.warn(`Task was added, but user with id ${userId} could not be retrieved`);
-            return { message: "Task added successfully, but the user could not be returned", };
+            return { message: 'Tarea registrada, pero no se encontró usuario' };
         }
-        return { message: "Task added successfully", user: updatedUser, };
+        return { message: "Tarea registrada", user: updatedUser, };
+    }
+    async completeTask(userId, taskId) {
+        const collection = await this.getCollection();
+        const result = await collection.findOneAndUpdate({
+            _id: new mongodb_1.ObjectId(userId),
+            "user.tasks.id": taskId
+        }, {
+            $set: { "user.tasks.$.task.completed": true }
+        });
+        return "Task marked as completed successfully";
     }
     async getTasks(userId, page = 1, limit = 5, name) {
         const collection = await this.getCollection();

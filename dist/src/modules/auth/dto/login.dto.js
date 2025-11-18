@@ -16,7 +16,7 @@ class LoginDto {
 exports.LoginDto = LoginDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'El nombre de usuario es obligatorio' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'El usuario es obligatorio' }),
     __metadata("design:type", String)
 ], LoginDto.prototype, "username", void 0);
 __decorate([
